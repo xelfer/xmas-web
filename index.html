@@ -2,14 +2,79 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
   <title>12 Brian St Christmas</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+  <link href="styles.css" rel="stylesheet" />
+  <!--
+    Aziz, Light!
+    Thank you Aziz.
+  -->
 </head>
-<body bgcolor="black"><center>
-  <input type="image" id="button1" src="https://sparkled.s3-ap-southeast-2.amazonaws.com/rainbow.png" />
-  <script type="text/javascript">
-    window.lastClick = 0;
-    document.getElementById('button1').onclick = function () {
-        if (Date.now() - window.lastClick > 1000) { // Prevent button from being hit repeatedly.
-          fetch('./playSequence/10', {
+<body>
+  <main>
+    <h1>Aziz, light!</h1>
+    <div class="buttons">
+      <a class="rainbow" href="#" data-sequence="./playSequence/10">
+        <i></i>
+        <span>
+        Rainbow
+        </span>
+      </a>
+      <a class="crazy" href="#" data-sequence="./playSequence/51">
+        <i></i>
+        <span>
+        Crazy Gradient
+        </span>
+      </a>
+      <a class="blue" href="#" data-sequence="./playSequence/52">
+        <i></i>
+        <span>
+        Blue
+        </span>
+      </a>
+      <a class="purple" href="#" data-sequence="./playSequence/53">
+        <i></i>
+        <span>
+        Purple
+        </span>
+      </a>
+      <a class="red" href="#" data-sequence="./playSequence/54">
+        <i></i>
+        <span>
+        Red
+        </span>
+      </a>
+      <a class="orange" href="#" data-sequence="./playSequence/55">
+        <i></i>
+        <span>
+        Orange
+        </span>
+      </a>
+      <a class="yellow" href="#" data-sequence="./playSequence/56">
+        <i></i>
+        <span>
+        Yellow
+        </span>
+      </a>
+      <a class="aqua" href="#" data-sequence="./playSequence/57">
+        <i></i>
+        <span>
+        Aqua
+        </span>
+      </a>
+      <a class="green" href="#" data-sequence="./playSequence/58">
+        <i></i>
+        <span>
+        Green
+        </span>
+      </a>
+    </div>
+  </main>
+  <script>
+    let lastClick = null;
+
+    const changeLights = url => {
+      console.log('call', url)
+      fetch(url, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -17,152 +82,18 @@
               'Content-Type': 'application/json'
             },
           })
-          window.lastClick = Date.now();
+    }
+
+    $(function() {
+      $('.buttons a').click(e => {
+        e.preventDefault();
+        const url = $(e.currentTarget).data('sequence');
+        if (Date.now() - lastClick > 1000) { // Prevent button from being hit repeatedly.
+          changeLights(url);
+          lastClick = Date.now();
         }
-      }
-  </script>
-  <br><br>
-  <input type="image" id="button2" src="https://sparkled.s3-ap-southeast-2.amazonaws.com/xmas.png" />
-  <script type="text/javascript">
-    window.lastClick = 0;
-    document.getElementById('button2').onclick = function () {
-        if (Date.now() - window.lastClick > 1000) { // Prevent button from being hit repeatedly.
-          fetch('./playSequence/51', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          })
-          window.lastClick = Date.now();
-        }
-      }
-  </script>
-  <br><br>
-  <input type="image" id="button3" src="https://sparkled.s3-ap-southeast-2.amazonaws.com/blue.png" />
-  <script type="text/javascript">
-    window.lastClick = 0;
-    document.getElementById('button3').onclick = function () {
-        if (Date.now() - window.lastClick > 1000) { // Prevent button from being hit repeatedly.
-          fetch('./playSequence/52', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          })
-          window.lastClick = Date.now();
-        }
-      }
-  </script>
-  <br><br>
-  <input type="image" id="button4" src="https://sparkled.s3-ap-southeast-2.amazonaws.com/purple.png" />
-  <script type="text/javascript">
-    window.lastClick = 0;
-    document.getElementById('button4').onclick = function () {
-        if (Date.now() - window.lastClick > 1000) { // Prevent button from being hit repeatedly.
-          fetch('./playSequence/53', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          })
-          window.lastClick = Date.now();
-        }
-      }
-  </script>
-  <br><br>
-  <input type="image" id="button5" src="https://sparkled.s3-ap-southeast-2.amazonaws.com/red.png" />
-  <script type="text/javascript">
-    window.lastClick = 0;
-    document.getElementById('button5').onclick = function () {
-        if (Date.now() - window.lastClick > 1000) { // Prevent button from being hit repeatedly.
-          fetch('./playSequence/54', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          })
-          window.lastClick = Date.now();
-        }
-      }
-  </script>
-  <br><br>
-  <input type="image" id="button6" src="https://sparkled.s3-ap-southeast-2.amazonaws.com/orange.png" />
-  <script type="text/javascript">
-    window.lastClick = 0;
-    document.getElementById('button6').onclick = function () {
-        if (Date.now() - window.lastClick > 1000) { // Prevent button from being hit repeatedly.
-	   fetch('./playSequence/55', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          })
-          window.lastClick = Date.now();
-        }
-      }
-  </script>
-  <br><br>
-  <input type="image" id="button7" src="https://sparkled.s3-ap-southeast-2.amazonaws.com/yellow.png" />
-  <script type="text/javascript">
-    window.lastClick = 0;
-    document.getElementById('button7').onclick = function () {
-        if (Date.now() - window.lastClick > 1000) { // Prevent button from being hit repeatedly.
-          fetch('./playSequence/56', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          })
-          window.lastClick = Date.now();
-        }
-      }
-  </script>
-  <br><br>
-  <input type="image" id="button8" src="https://sparkled.s3-ap-southeast-2.amazonaws.com/green.png" />
-  <script type="text/javascript">
-    window.lastClick = 0;
-    document.getElementById('button8').onclick = function () {
-        if (Date.now() - window.lastClick > 1000) { // Prevent button from being hit repeatedly.
-          fetch('./playSequence/57', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          })
-          window.lastClick = Date.now();
-        }
-      }
-  </script>
-  <br><br>
-  <input type="image" id="button9" src="https://sparkled.s3-ap-southeast-2.amazonaws.com/aqua.png" />
-  <script type="text/javascript">
-    window.lastClick = 0;
-    document.getElementById('button9').onclick = function () {
-        if (Date.now() - window.lastClick > 1000) { // Prevent button from being hit repeatedly.
-          fetch('./playSequence/58', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          })
-          window.lastClick = Date.now();
-        }
-      }
+      })
+    });
+
   </script>
 </body>
