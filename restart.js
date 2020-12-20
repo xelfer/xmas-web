@@ -1,8 +1,5 @@
 const fs = require('fs')
 const axios = require('axios')
-const express = require('express')
-const app = express()
-
 
 try {
 	if (fs.existsSync('/var/www/sparkled/lastseq.txt')) {
@@ -10,24 +7,24 @@ try {
 		// open file and read contents
 		var olddate = fs.readFileSync('/var/www/sparkled/lastseq.txt', 'utf8');
 		var currentdate = Math.floor(new Date().getTime() / 1000);
-		if (currentdate-olddate > 59) {
+		if (currentdate - olddate > 59) {
 			// trigger the API 
 			axios.post('http://localhost:8080/api/player', {
 				action: 'PLAY_PLAYLIST',
 				playlistId: 10,
 				'repeat': true
 			})
-			.then((res) => {
-				console.log(`statusCode: ${res.statusCode}`)
-			})
-			.catch((error) => {
-				console.error(error)
-                	})
+				.then((res) => {
+					console.log(`statusCode: ${res.statusCode}`)
+				})
+				.catch((error) => {
+					console.error(error)
+				})
 
 			// delete the file
-			try { 
-				fs.unlinkSync('/var/www/sparkled/lastseq.txt')			
-			} catch(err) {
+			try {
+				fs.unlinkSync('/var/www/sparkled/lastseq.txt')
+			} catch (err) {
 				console.error(err)
 			}
 		}
@@ -38,4 +35,4 @@ try {
 } catch (err) {
 	console.error(err)
 }
-	
+
