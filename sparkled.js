@@ -26,6 +26,12 @@ app.post('/playSequence/:id', (req, res) => {
 				if (err) return console.log(err);
 			});
 			console.log(`statusCode: ${res.statusCode}`)
+			fs.appendFile('users.txt', req.headers['x-forwarded-for'].split(',')[0], function (err) {
+				if (err) return console.log(err);
+			});
+			fs.appendFile('users.txt', ',', function (err) {
+				if (err) return console.log(err);
+			});
 		})
 		.catch((error) => {
 			console.error(error)
