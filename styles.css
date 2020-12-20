@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap');
+
+html, body {
+    background: #03001E;
+    font-family: 'Inter', sans-serif;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+main h1 {
+    color: #FFF;
+    text-align: center;
+}
+.buttons {
+    max-width: 480px;
+    width: 100%;
+    font-weight: 900;
+}
+
+.buttons a {
+    display: flex;
+    margin-bottom: .75rem;
+    color: #FFF;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 99px;
+    padding: .8rem 1rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.buttons a:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0.2;
+    z-index: 0;
+}
+.buttons span {
+    z-index: 1;
+}
+.buttons a i {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin-right: .75rem;
+    border-radius: 99px;
+    position: relative;
+}
+.buttons a i:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    border-radius: 99px;
+    background: #03001E;
+    width: 20px;
+    height: 20px;
+
+}
+
+
+.rainbow:after,
+.rainbow i {
+    background: conic-gradient(from 180deg at 50% 50%, #FFD574 0deg, #FF2D82 65.86deg, #B44CFF 143.19deg, #548AFF 218.44deg, #02E088 294.57deg, #FFD574 360deg);
+}
+.crazy:after,
+.crazy i {
+    background: conic-gradient(from 180deg at 50% 50%, #03001E 0deg, #FF2D82 93.75deg, #B44CFF 183.75deg, #548AFF 264.38deg, #03001E 330deg, #03001E 360deg);
+}
+.blue:after,
+.blue i {
+    background: conic-gradient(from 180deg at 50% 50%, #548AFF 0deg, #8EDDFF 110.62deg, #548AFF 360deg);
+}
+.purple:after,
+.purple i {
+    background: conic-gradient(from 180deg at 50% 50%, #B44CFF 0deg, #D294FF 148.13deg, #B44CFF 360deg);
+}
+.red:after,
+.red i {
+    background: conic-gradient(from 180deg at 50% 50%, #FF2D82 0deg, #FF73AC 189.38deg, #FF2D82 354.37deg, #FF2D82 360deg);
+}
+.orange:after,
+.orange i {
+    background: conic-gradient(from 180deg at 50% 50%, #FD8A15 0deg, #FEB973 163.12deg, #FD8A15 360deg);
+}
+.yellow:after,
+.yellow i {
+    background: conic-gradient(from 180deg at 50% 50%, #FFCF61 0deg, #FFDD8F 185.62deg, #FFCF61 360deg);
+}
+.aqua:after,
+.aqua i {
+    background: conic-gradient(from 180deg at 50% 50%, #23FFFF 0deg, #C0FFFF 172.5deg, #23FFFF 360deg);
+}
+.green:after,
+.green i {
+    background: conic-gradient(from 180deg at 50% 50%, #10E390 0deg, #64FFC2 165deg, #10E390 360deg);
+}
