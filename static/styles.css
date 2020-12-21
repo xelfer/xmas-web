@@ -109,3 +109,7 @@ main h1 {
 .bangarang i {
     background: conic-gradient(from 180deg at 50% 50%, #FF2D8A 0deg, #FF2D00 165deg, #10E39A 360deg);
 }
+.bluey:after,
+.bluey i {
+    background: conic-gradient(from 180deg at 50% 50%, #FE9200 0deg, #fe9200 165deg, #73d8ff 360deg);
+}
