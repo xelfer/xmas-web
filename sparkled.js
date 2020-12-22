@@ -56,13 +56,14 @@ function now() {
 
 // Store user IPs to a text file
 function logUserInteraction(req) {
-	fs.appendFile('users.txt', req.headers['x-forwarded-for'].split(',')[0], function (err) {
+	fs.appendFile('users.txt', req.headers['x-forwarded-for'].split(',')[0] + ' ' + req.get('User-Agent') + '\n', function (err) {
 		if (err) return console.log(err);
 	});
-	fs.appendFile('users.txt', ',', function (err) {
-		if (err) return console.log(err);
-	});
+//	fs.appendFile('users.txt', ',', function (err) {
+//		if (err) return console.log(err);
+//	});
 }
+
 
 function reset() {
 	console.log("Resetting to fallback sequence due to inactivity");
