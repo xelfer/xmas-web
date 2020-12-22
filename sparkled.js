@@ -59,18 +59,6 @@ function logUserInteraction(req) {
 	});
 }
 
-function tick() {
-	const hour = new Date().getHours();
-	// Only run between 6pm (1800) and 11pm (2300)
-	if (hour > 17 && hour < 23) {
-		// If no user input in the last minute
-		if (lastRan && (now() - lastRan > 59)) {
-			reset();
-		}
-
-	}
-}
-
 function reset() {
 	console.log("Resetting to fallback sequence due to inactivity");
 	axios.post('http://localhost:8080/api/player', {
@@ -86,9 +74,23 @@ function reset() {
 		})
 }
 
+function tick() {
+	const hour = new Date().getHours();
+	// Only run between 6pm (1800) and 11pm (2300)
+	if (hour > 17 && hour < 23) {
+		// If no user input in the last minute
+		if (lastRan && (now() - lastRan > 59)) {
+			reset();
+			lastRan = null; // clear this out as it wasn't a user who changed this
+		}
+
+	}
+}
+
+
 // -----------------
 
-// Every minute
+// Runs every second
 setInterval(tick, 1000);
 
 app.listen(port, () => {
