@@ -93,6 +93,9 @@
               new Toast("Another sequence is already playing!");
             }
           })
+          .catch(err => {
+            new Toast("Uhoh, something went wrong!");
+          })
     }
 
     $(function() {
