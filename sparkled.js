@@ -1,58 +1,96 @@
 const axios = require('axios')
 const express = require('express')
-const app = express()
-const port = 80
-
-app.use(express.static('/var/www/sparkled/images'));
+const fs = require('fs');
+const app = express();
+const port = 80;
 
 app.use(express.static('static'))
 
-fs = require('fs');
+let lastRan = null;
+let lastRanSequence = null;
+
 app.post('/playSequence/:id', (req, res) => {
-        // check if music sequence started within last 30 seconds
-	if (fs.existsSync('/var/www/sparkled/musicisplaying.txt')) {
-                var olddate = fs.readFileSync('/var/www/sparkled/musicisplaying.txt', 'utf8');
-                var currentdate = Math.floor(new Date().getTime() / 1000);
-                if (currentdate - olddate > 30) {
-			play(req);
-		} else {
-			// i need the alert the user somehow
-			//res.end(1)
-		}
-	} else {
-		play(req);		
+	// Slow down partner, 3 second cool off
+	if (lastRan && (now() - lastRan < 3)) {
+		res.status(425).send();
 	}
-	res.end()
+	// Check if music sequence started within last 30 seconds
+	if (lastRanSequence && (now() - lastRanSequence < 30)) {
+		res.status(425).send();
+	}
+	// Otherwise we're good to go.
+	else {
+		play(req);
+		res.status(200).send();
+	}
 })
 
 function play(req) {
+
+	const id = req.params.id;
+
 	axios.post('http://localhost:8080/api/player', {
 		action: 'PLAY_SEQUENCE',
-		sequenceId: req.params.id,
+		sequenceId: id,
 		'repeat': false
-		})
+	})
 		.then((res) => {
-			fs.writeFile('lastseq.txt', Math.floor(new Date().getTime() / 1000), function (err) {
-				if (err) return console.log(err);
-			});
-			console.log(`statusCode: ${res.statusCode}`)
-			fs.appendFile('users.txt', req.headers['x-forwarded-for'].split(',')[0], function (err) {
-				if (err) return console.log(err);
-			});
-			fs.appendFile('users.txt', ',', function (err) {
-				if (err) return console.log(err);
-			});
-			if (req.params.id == 14 || req.params.id == 59) {
-				fs.appendFile('musicisplaying.txt', ',', function (err) {
-					if (err) return console.log(err);
-				});
-			}
-	})
-	.catch((error) => {
-		console.error(error)
-	})
+			logUserInteraction(req);
+			lastRan = now();
+			lastRanSequence = (id === 14 || id === 59) ? now() : null;
+		})
+		.catch((error) => {
+			console.error(error)
+		})
 }
 
+// Return current time rounded to the second
+function now() {
+	return Math.floor(new Date().getTime() / 1000);
+}
+
+// Store user IPs to a text file
+function logUserInteraction(req) {
+	fs.appendFile('users.txt', req.headers['x-forwarded-for'].split(',')[0], function (err) {
+		if (err) return console.log(err);
+	});
+	fs.appendFile('users.txt', ',', function (err) {
+		if (err) return console.log(err);
+	});
+}
+
+function tick() {
+	const hour = new Date().getHours();
+	// Only run between 6pm (1800) and 11pm (2300)
+	if (hour > 17 && hour < 23) {
+		// If no user input in the last minute
+		if (lastRan && (now() - lastRan > 59)) {
+			reset();
+		}
+
+	}
+}
+
+function reset() {
+	console.log("Resetting to fallback sequence due to inactivity");
+	axios.post('http://localhost:8080/api/player', {
+		action: 'PLAY_PLAYLIST',
+		playlistId: 10,
+		'repeat': true
+	})
+		.then((res) => {
+			console.log(`Received statusCode: ${res.statusCode}`)
+		})
+		.catch((error) => {
+			console.error(error)
+		})
+}
+
+// -----------------
+
+// Every minute
+setInterval(tick, 1000);
+
 app.listen(port, () => {
-	console.log(`12Brian app listening at http://12brian.st`)
+	console.log(`12Brian app listening at http://localhost:${port} or http://12brian.st`)
 })
