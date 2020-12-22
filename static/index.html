@@ -95,6 +95,13 @@
               'Content-Type': 'application/json'
             },
           })
+          .then(res => {
+            if (res.status === 429) {
+              alert("Slow down, Cowboy!");
+            } else if (res.status === 425) {
+              alert("Another sequence is already playing!");
+            }
+          })
     }
 
     $(function() {
