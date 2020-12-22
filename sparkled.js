@@ -15,7 +15,7 @@ app.post('/playSequence/:id', (req, res) => {
 	// Slow down partner, 3 second cool off
 	if (lastRan && (now() - lastRan < 3)) {
 		console.log('Cool down!');
-		res.status(425).send();
+		res.status(429).send();
 	}
 	// Check if music sequence started within last 30 seconds
 	if (lastRanSequence && (now() - lastRanSequence < 30)) {
