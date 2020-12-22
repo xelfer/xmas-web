@@ -2,7 +2,7 @@ const axios = require('axios')
 const express = require('express')
 const fs = require('fs');
 const app = express();
-const port = 80;
+const port = 3000;
 
 app.use(express.static('static'))
 
@@ -31,7 +31,8 @@ app.post('/playSequence/:id', (req, res) => {
 
 function play(req) {
 
-	const id = req.params.id;
+	const id = req.params.id && parseInt(req.params.id);
+	console.log({ id })
 	lastRan = now();
 	lastRanSequence = (id === 14 || id === 59) ? now() : null;
 
@@ -44,7 +45,7 @@ function play(req) {
 			logUserInteraction(req);
 		})
 		.catch((error) => {
-			console.error(error)
+			// console.error(error)
 		})
 }
 
