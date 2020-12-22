@@ -1,8 +1,15 @@
-const axios = require('axios')
+const axios = require('axios');
+const { Socket } = require('dgram');
 const express = require('express')
 const fs = require('fs');
 const app = express();
 const port = 3000;
+
+const server = app.listen(port, () => {
+	console.log(`12Brian app listening at http://localhost:${port} or http://12brian.st`)
+})
+const io = require('socket.io')(server);
+
 
 app.use(express.static('static'))
 
@@ -59,9 +66,9 @@ function logUserInteraction(req) {
 	fs.appendFile('users.txt', req.headers['x-forwarded-for'].split(',')[0] + ' ' + req.get('User-Agent') + '\n', function (err) {
 		if (err) return console.log(err);
 	});
-//	fs.appendFile('users.txt', ',', function (err) {
-//		if (err) return console.log(err);
-//	});
+	//	fs.appendFile('users.txt', ',', function (err) {
+	//		if (err) return console.log(err);
+	//	});
 }
 
 
@@ -99,6 +106,11 @@ function tick() {
 // Runs every second
 setInterval(tick, 1000);
 
-app.listen(port, () => {
-	console.log(`12Brian app listening at http://localhost:${port} or http://12brian.st`)
+io.on("connection", socket => {
+	console.log(`User joined ${socket.id}`)
+	io.emit("users", io.engine.clientsCount)
+	socket.on("disconnect", () => {
+		console.log(`User left ${socket.id}`)
+		io.emit("users", io.engine.clientsCount)
+	})
 })

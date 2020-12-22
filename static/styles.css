@@ -16,7 +16,8 @@ main {
     flex-direction: column;
     align-items: center;
 }
-main h1 {
+main .heading {
+    padding-top: 8px;
     max-width: 480px;
     width: 100%;
     color: #6B6791;
@@ -26,6 +27,21 @@ main h1 {
     letter-spacing: 0.02em;
     text-align: left;
     padding-left: .2rem;
+    display: flex;
+    line-height: 24px;
+    vertical-align: top;
+}
+#userCount {
+    align-self: flex-end;
+}
+#userCount span {
+    vertical-align: top;
+}
+#userCount svg {
+    width: 16px;
+    height: 24px;
+    fill: #FFF;
+    margin-right: -4px;
 }
 .buttons {
     max-width: 480px;

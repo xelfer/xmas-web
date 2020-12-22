@@ -4,6 +4,7 @@
   <title>12 Brian St Christmas</title>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
   <script src="/toast.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <link href="toast.css" rel="stylesheet" /> <!-- put it first -->
   <link href="styles.css" rel="stylesheet" />
   <!--
@@ -13,7 +14,15 @@
 </head>
 <body>
   <main>
-    <h1>Pick a colour or song!</h1>
+    <div class="heading">
+      <div style="flex-grow: 1;">
+      Pick a colour or song!
+    </div>
+      <div id="userCount">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve"><g id="Frame_-_24px"><rect fill="none" width="24" height="24"></rect></g><g id="Filled_Icons"><g><g><path fill="#757575" d="M12.002,12.006c2.206,0,4-1.795,4-4c0-2.205-1.794-4-4-4c-2.206,0-4,1.795-4,4     C8.002,10.211,9.797,12.006,12.002,12.006z"></path><path fill="#757575" d="M12.002,13.006c-4.71,0-8,2.467-8,6v1h16v-1C20.002,15.473,16.713,13.006,12.002,13.006z"></path></g></g></g></svg>
+        <span class="value"></span>
+      </div>
+    </div>
     <div class="buttons">
       <a class="rainbow" href="#" data-sequence="./playSequence/10">
         <span>
@@ -76,6 +85,13 @@
   <script>
 
     let lastClick = null;
+
+    const socket = io();
+
+    socket.on("users", data => {
+      $("#userCount").show();
+      $("#userCount .value").text(`${data} online`);
+    });
 
     const changeLights = url => {
       fetch(url, {
