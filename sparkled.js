@@ -10,12 +10,16 @@ let lastRan = null;
 let lastRanSequence = null;
 
 app.post('/playSequence/:id', (req, res) => {
+	console.log({ lastRan })
+	console.log({ lastRanSequence })
 	// Slow down partner, 3 second cool off
 	if (lastRan && (now() - lastRan < 3)) {
+		console.log('Cool down!');
 		res.status(425).send();
 	}
 	// Check if music sequence started within last 30 seconds
 	if (lastRanSequence && (now() - lastRanSequence < 30)) {
+		console.log('Cool down due to sequence!');
 		res.status(425).send();
 	}
 	// Otherwise we're good to go.
@@ -28,6 +32,8 @@ app.post('/playSequence/:id', (req, res) => {
 function play(req) {
 
 	const id = req.params.id;
+	lastRan = now();
+	lastRanSequence = (id === 14 || id === 59) ? now() : null;
 
 	axios.post('http://localhost:8080/api/player', {
 		action: 'PLAY_SEQUENCE',
@@ -36,8 +42,6 @@ function play(req) {
 	})
 		.then((res) => {
 			logUserInteraction(req);
-			lastRan = now();
-			lastRanSequence = (id === 14 || id === 59) ? now() : null;
 		})
 		.catch((error) => {
 			console.error(error)
