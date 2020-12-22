@@ -56,7 +56,7 @@ function now() {
 
 // Store user IPs to a text file
 function logUserInteraction(req) {
-	fs.appendFile('users.txt', req.headers['x-forwarded-for'].split(',')[0] + ' ' + req.get('User-Agent') + '\n', function (err) {
+	fs.appendFile('users.txt', req.params.id + ' ' + req.headers['x-forwarded-for'].split(',')[0] + ' ' + req.get('User-Agent') + '\n', function (err) {
 		if (err) return console.log(err);
 	});
 //	fs.appendFile('users.txt', ',', function (err) {
@@ -83,7 +83,7 @@ function reset() {
 function tick() {
 	const hour = new Date().getHours();
 	// Only run between 6pm (1800) and 11pm (2300)
-	if (hour > 17 && hour < 23) {
+	if (hour > 17 && hour < 24) {
 		// If no user input in the last minute
 		if (lastRan && (now() - lastRan > 59)) {
 			reset();
