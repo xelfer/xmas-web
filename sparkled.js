@@ -31,7 +31,7 @@ app.post('/playSequence/:id', (req, res) => {
 		res.status(429).send();
 	}
 	// Check if music sequence started within last seconds
-	if (lastRanSequence.when &&
+	if (lastRanSequence && lastRanSequence.when &&
 		(now() - lastRanSequence.when < sequenceDurations[lastRanSequence.id])) {
 		console.log('Cool down due to sequence!');
 		res.status(425).send();
