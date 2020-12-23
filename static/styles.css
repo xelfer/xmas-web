@@ -126,6 +126,22 @@ main .heading {
     color: #9C9AB6;
     padding: .75rem;
 }
+#message-me {
+    margin: 1.5rem 0 1rem 0;
+    background: #201B5A;
+    color: #9C9AB6;
+    text-decoration: none;
+    display: flex;
+    align-content: center;
+    border-radius: 4px;
+    width: 100%;
+    padding: 1rem .75rem;
+}
+#message-me img {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+}
 @media (max-width: 1024px) {
     .toast {
         left: 0;
