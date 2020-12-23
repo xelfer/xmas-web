@@ -5,6 +5,12 @@ const fs = require('fs');
 const app = express();
 const port = 3000;
 
+const sequenceDurations = {
+	14: 30,
+	59: 30,
+	60: 82
+}
+
 const server = app.listen(port, () => {
 	console.log(`12Brian app listening at http://localhost:${port} or http://12brian.st`)
 })
@@ -24,8 +30,9 @@ app.post('/playSequence/:id', (req, res) => {
 		console.log('Cool down!');
 		res.status(429).send();
 	}
-	// Check if music sequence started within last 30 seconds
-	if (lastRanSequence && (now() - lastRanSequence < 30)) {
+	// Check if music sequence started within last seconds
+	if (lastRanSequence && lastRanSequence.when &&
+		(now() - lastRanSequence.when < sequenceDurations[lastRanSequence.id])) {
 		console.log('Cool down due to sequence!');
 		res.status(425).send();
 	}
@@ -37,11 +44,10 @@ app.post('/playSequence/:id', (req, res) => {
 })
 
 function play(req) {
-
 	const id = req.params.id && parseInt(req.params.id);
-	console.log({ id })
+	const isSequence = !!sequenceDurations[id];
 	lastRan = now();
-	lastRanSequence = (id === 14 || id === 59) ? now() : null;
+	lastRanSequence = isSequence ? { when: now(), id } : null;
 
 	axios.post('http://localhost:8080/api/player', {
 		action: 'PLAY_SEQUENCE',
@@ -66,9 +72,6 @@ function logUserInteraction(req) {
 	fs.appendFile('users.txt', req.params.id + ' ' + req.headers['x-forwarded-for'].split(',')[0] + ' ' + req.get('User-Agent') + '\n', function (err) {
 		if (err) return console.log(err);
 	});
-	//	fs.appendFile('users.txt', ',', function (err) {
-	//		if (err) return console.log(err);
-	//	});
 }
 
 
