@@ -30,9 +30,8 @@ app.post('/playSequence/:id', (req, res) => {
 		console.log('Cool down!');
 		res.status(429).send();
 	}
-	// Check if music sequence started within last 30 seconds
-	if (lastRanSequence &&
-		lastRanSequence.when &&
+	// Check if music sequence started within last seconds
+	if (lastRanSequence.when &&
 		(now() - lastRanSequence.when < sequenceDurations[lastRanSequence.id])) {
 		console.log('Cool down due to sequence!');
 		res.status(425).send();
@@ -47,7 +46,6 @@ app.post('/playSequence/:id', (req, res) => {
 function play(req) {
 	const id = req.params.id && parseInt(req.params.id);
 	const isSequence = !!sequenceDurations[id];
-	console.log({ isSequence })
 	lastRan = now();
 	lastRanSequence = isSequence ? { when: now(), id } : null;
 
