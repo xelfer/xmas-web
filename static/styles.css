@@ -40,8 +40,10 @@ main .heading {
 #userCount svg {
     width: 16px;
     height: 24px;
-    fill: #FFF;
     margin-right: -4px;
+}
+#userCount svg path {
+    fill: #9C9AB6;
 }
 .buttons {
     max-width: 480px;
