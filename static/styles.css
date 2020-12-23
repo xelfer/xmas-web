@@ -114,6 +114,11 @@ main .heading {
 .bluey span {
     background: linear-gradient(91.44deg, #FFAF72 -19.52%, #FFAF72 12.37%, #FFFFFF 42.93%, #D2E9FB 51.56%, #81BDE2 108.03%);
 }
+
+.chopsuey span {
+    background: linear-gradient(106.52deg, #FFD645 -1.31%, #FFE9B5 108.4%);
+}
+
 .toast > .body {
     background: #201B5A !important;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.75);

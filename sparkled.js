@@ -92,7 +92,7 @@ function tick() {
 	// Only run between 6pm (1800) and 11pm (2300)
 	if (hour > 17 && hour < 24) {
 		// If no user input in the last minute
-		if (lastRan && (now() - lastRan > 59)) {
+		if (lastRan && (now() - lastRan > 90)) {
 			reset();
 			lastRan = null; // clear this out as it wasn't a user who changed this
 		}
