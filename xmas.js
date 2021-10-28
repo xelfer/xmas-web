@@ -54,7 +54,7 @@ function play(req) {
 	//	sequenceId: id,
 	//	'repeat': false
 	//})
-	axios.get('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/id')
+	axios.get('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id)
 		.then((res) => {
 			logUserInteraction(req);
 		})
