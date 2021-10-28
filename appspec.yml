@@ -4,11 +4,11 @@ files:
   - source: /
     destination: /home/ubuntu/xmas-web
 hooks:
-ApplicationStart:
-  - location: bin/appstart
+  ApplicationStart:
+  - location: bin/app-start
     timeout: 60
     runas: ubuntu
-ApplicationStop:
-  - location: bin/appstop
+  ApplicationStop:
+  - location: bin/app-stop
     timeout: 60
     runas: ubuntu
