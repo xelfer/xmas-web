@@ -50,13 +50,7 @@ function play(req) {
 	const isSequence = !!sequenceDurations[id];
 	lastRan = now();
 	lastRanSequence = isSequence ? { when: now(), id } : null;
-	console.log(id);
 
-	//axios.post('http://localhost:8080/api/player', {
-	//	action: 'PLAY_SEQUENCE',
-	//	sequenceId: id,
-	//	'repeat': false
-	//})
 	console.log('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id)
 	axios.get('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id)
 		.then((res) => {
@@ -101,7 +95,7 @@ function tick() {
 	if (hour > 17 && hour < 24) {
 		// If no user input in the last minute
 		if (lastRan && (now() - lastRan > 90)) {
-			reset();
+			//reset();
 			lastRan = null; // clear this out as it wasn't a user who changed this
 		}
 
