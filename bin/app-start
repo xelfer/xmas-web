@@ -1,2 +1,2 @@
 #!/bin/bash
-pm2 start xmas.js
+pm2 start /home/ubuntu/xmas-web/xmas.js
