@@ -8,3 +8,7 @@ ApplicationStart:
   - location: bin/appstart
     timeout: 60
     runas: ubuntu
+ApplicationStop:
+  - location: bin/appstop
+    timeout: 60
+    runas: ubuntu

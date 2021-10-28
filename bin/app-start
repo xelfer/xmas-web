@@ -1,2 +1,2 @@
 #!/bin/bash
-node xmas.js
+pm2 start xmas.js
