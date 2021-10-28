@@ -5,7 +5,7 @@ files:
     destination: /home/ubuntu/xmas-web
 hooks:
   AfterInstall:
-  - location: bin/app-config
+   - location: bin/app-config
      timeout: 60
      runas: root
   ApplicationStart:
