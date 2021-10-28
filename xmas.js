@@ -3,7 +3,7 @@ const { Socket } = require('dgram');
 const express = require('express')
 const fs = require('fs');
 const app = express();
-const port = 3000;
+const port = 80;
 
 const sequenceDurations = {
 	14: 30,
@@ -49,11 +49,12 @@ function play(req) {
 	lastRan = now();
 	lastRanSequence = isSequence ? { when: now(), id } : null;
 
-	axios.post('http://localhost:8080/api/player', {
-		action: 'PLAY_SEQUENCE',
-		sequenceId: id,
-		'repeat': false
-	})
+	//axios.post('http://localhost:8080/api/player', {
+	//	action: 'PLAY_SEQUENCE',
+	//	sequenceId: id,
+	//	'repeat': false
+	//})
+	axios.get('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/id')
 		.then((res) => {
 			logUserInteraction(req);
 		})
