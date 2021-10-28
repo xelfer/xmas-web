@@ -3,3 +3,8 @@ os: linux
 files:
   - source: /
     destination: /home/ubuntu/xmas-web
+hooks:
+ApplicationStart:
+  - location: bin/appstart
+    timeout: 60
+    runas: ubuntu
