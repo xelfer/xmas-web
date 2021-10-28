@@ -38,22 +38,26 @@ app.post('/playSequence/:id', (req, res) => {
 	}
 	// Otherwise we're good to go.
 	else {
+		console.log(req.params.id);
 		play(req);
+		console.log(req.params.id);
 		res.status(200).send();
 	}
 })
 
 function play(req) {
-	const id = req.params.id && parseInt(req.params.id);
+	const id = req.params.id;
 	const isSequence = !!sequenceDurations[id];
 	lastRan = now();
 	lastRanSequence = isSequence ? { when: now(), id } : null;
+	console.log(id);
 
 	//axios.post('http://localhost:8080/api/player', {
 	//	action: 'PLAY_SEQUENCE',
 	//	sequenceId: id,
 	//	'repeat': false
 	//})
+	console.log('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id)
 	axios.get('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id)
 		.then((res) => {
 			logUserInteraction(req);
