@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
-
 html, body {
     background: #03001E;
-    font-family: 'Inter', sans-serif;
+    color: #FFF;
+    font-family: 'Space Grotesk', sans-serif;
+    padding: 0;
+    margin: 0;
 }
 
 * {
@@ -11,112 +11,132 @@ html, body {
 }
 
 main {
-    display: flex;
+    /* display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    text-align: left; */
+    background: url('wallpaper-min.jpg') center top no-repeat;
+    background-size: cover;
+    padding: 20px;
 }
-main .heading {
-    padding-top: 8px;
-    max-width: 480px;
-    width: 100%;
-    color: #6B6791;
-    font-family: 'Roboto Mono', Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
-    text-transform: uppercase;
-    font-size: .85rem;
-    letter-spacing: 0.02em;
-    text-align: left;
-    padding-left: .2rem;
-    display: flex;
-    line-height: 24px;
-    vertical-align: top;
+
+@media (min-width: 1024px) {
+    main {
+        margin: 0 auto;
+        max-width: 640px;
+        margin-top: 20px;
+        border-radius: 6px;
+    }
+}
+header {
+    margin-bottom: 1em;
+}
+header h1 {
+    color: rgba(255,255,255,0.8);
+    font-size: 20px;
+    margin-bottom: .25em;
+}
+header h1 span {
+    display: block;
+    font-size: 36px;
+    color:#FFF;
 }
 #userCount {
-    align-self: flex-end;
+    color: #CBD5E1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
-#userCount span {
-    vertical-align: top;
+
+.status {
+    border-radius: 3px;
+    text-transform: uppercase;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    color: #040127;
+    padding: 4px 8px;
+    opacity: 0;
+    position: absolute;
+}
+#status-row {
+    height: 26px;
+}
+.status svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+}
+
+#status__live {
+    background: #FF0F9F;
+    box-shadow: 0px 4px 29px rgba(255, 15, 159, 0.25), 0px 2px 40px rgba(255, 15, 159, 0.35), 0px 0px 20px rgba(255, 15, 159, 0.5);
+}
+#status__offline {
+    background: #CBD5E1;
+}
+
+main h2 {
+    font-size: 24px;
+    margin: 1em 0 0.25em 0;
 }
 #userCount svg {
-    width: 16px;
+    width: 18px;
     height: 24px;
-    margin-right: -4px;
+    margin-right: 4px;
 }
 #userCount svg path {
-    fill: #9C9AB6;
+    fill: currentColor;
 }
 .buttons {
-    max-width: 480px;
     width: 100%;
-    font-weight: 900;
     overflow: visible;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 .buttons a {
-    display: block;
-    margin-bottom: .25rem;
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
-    font-weight: 800;
-    font-size: 72px;
+    justify-content: space-between;
+    font-size: 14px;
     line-height: 1.1;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
+    width: calc(50% - 4px);
+    margin: 4px 0;
+    background: rgba(255,255,255,0.1);
+    height: 75px;
+    padding: 14px 18px;
+    border-radius: 3px;
+    color: #FFF;
+    transition: all .2s ease-in-out
+}
+.buttons a span.icon {
+    justify-self: flex-start;
+    width: 18px;
+    height: 18px;
+    overflow: hidden;
+    color: #CBD5E1;
 }
 
-.buttons a span {
-    display: inline-block;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.buttons a.playing {
+    background: white;
+    color: #040127;
+    /* transform: scale(1.1) */
 }
 
-
-.rainbow span {
-    background: linear-gradient(96.24deg, #FFD574 -1.7%, #FF2D82 14.9%, #B44CFF 34.39%, #548AFF 53.35%, #02E088 72.54%, #FFD574 89.03%);
+.buttons a.playing span.icon svg {
+    color: #64748B;
+    -webkit-animation: playing 5s linear infinite;
+    animation: playing 5s linear infinite;
 }
 
-.crazy span {
-    background: linear-gradient(97.9deg, #FF2D82 -7%, #FF2D82 13.77%, #B44CFF 48.57%, #548AFF 71.03%, #02E088 100.78%);
-}
-
-.blue span {
-    background: linear-gradient(106.52deg, #286BFD -1.31%, #8EEBFF 108.4%);
-}
-
-.purple span {
-    background: linear-gradient(106.52deg, #9922EF -1.31%, #F094FF 108.4%);
-}
-
-.red span {
-    background: linear-gradient(106.52deg, #ED0161 -1.31%, #FF73F1 108.4%);
-}
-
-.orange span {
-    background: linear-gradient(106.52deg, #EE6604 -1.31%, #FFE9B5 108.4%);
-}
-
-.yellow span {
-    background: linear-gradient(106.52deg, #FFD645 -1.31%, #FFE9B5 108.4%);
-}
-
-.aqua span {
-    background: linear-gradient(106.52deg, #2DF2FF -1.31%, #A4FFEF 108.4%);
-}
-
-.green span {
-    background: linear-gradient(106.52deg, #00D964 -1.31%, #57FFF5 108.4%);
-}
-
-.bangarang span {
-    background: linear-gradient(97.9deg, #FF2D82 -7%, #FF2D82 48.01%, #35D1E6 69.34%);
-}
-
-.bluey span {
-    background: linear-gradient(91.44deg, #FFAF72 -19.52%, #FFAF72 12.37%, #FFFFFF 42.93%, #D2E9FB 51.56%, #81BDE2 108.03%);
-}
-
-.chopsuey span {
-    background: linear-gradient(106.52deg, #FFD645 -1.31%, #FFE9B5 108.4%);
+.buttons a span.text {
+    justify-self: flex-end;
 }
 
 .toast > .body {
@@ -127,7 +147,6 @@ main .heading {
     padding: .75rem;
 }
 #message-me {
-    max-width: 480px;
     margin: 1.5rem 0 1rem 0;
     background: #201B5A;
     color: #9C9AB6;
@@ -151,4 +170,44 @@ main .heading {
         left: 0;
         right: 0;
     }
+}
+
+.fadeIn {
+    -webkit-animation: fadein 1s linear forwards;
+    animation: fadein 1s linear forwards;
+}
+
+.fadeOut {
+    -webkit-animation: fadeout 1s linear forwards;
+    animation: fadeout 1s linear forwards;
+}
+
+@-webkit-keyframes fadein {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadein {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes fadeout {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes fadeout {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@-webkit-keyframes playing {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-91px); }
+}
+
+@keyframes playing {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-91px); }
 }
