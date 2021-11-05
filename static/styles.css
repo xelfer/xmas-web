@@ -72,8 +72,8 @@ header h1 span {
 }
 
 #status__live {
-    background: #FF4591;
-    box-shadow: 0px 2px 40px rgba(255, 69, 145, 0.35), 0px 0px 20px rgba(255, 69, 145, 0.5);
+    background: #FF0F9F;
+    box-shadow: 0px 4px 29px rgba(255, 15, 159, 0.25), 0px 2px 40px rgba(255, 15, 159, 0.35), 0px 0px 20px rgba(255, 15, 159, 0.5);
 }
 #status__offline {
     background: #CBD5E1;
