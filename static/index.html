@@ -337,7 +337,8 @@ $(function() {
       $("#userCount").show();
       $("#status__live").addClass('fadein');
       $("#userCount .loading").hide();
-      $("#userCount .value").text(`${data} online`);
+      const plural = data === 1 ? 's' : '';
+      $("#userCount .value").text(`${data} user${plural} connected`);
     });
 
   </script>
