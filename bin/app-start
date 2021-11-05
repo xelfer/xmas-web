@@ -1,2 +1,3 @@
 #!/bin/bash
+cd /home/ubuntu/xmas-web/
 pm2 start /home/ubuntu/xmas-web/

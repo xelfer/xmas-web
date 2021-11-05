@@ -1,2 +1,2 @@
 #!/bin/bash
-pm2 stop xmas-web
+pm2 stop -f xmas-web
