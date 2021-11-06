@@ -6,7 +6,7 @@ const app = express();
 const port = 8080;
 
 const sequenceDurations = {
-	Bluey.fseq: 127
+	Bluey: 127
 }
 
 const server = app.listen(port, () => {
@@ -50,8 +50,8 @@ function play(req) {
 	lastRan = now();
 	lastRanSequence = isSequence ? { when: now(), id } : null;
 
-	console.log('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id)
-	axios.get('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id)
+	console.log('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id + '.fseq')
+	axios.get('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id + '.fseq')
 		.then((res) => {
 			logUserInteraction(req);
 		})
