@@ -6,9 +6,7 @@ const app = express();
 const port = 8080;
 
 const sequenceDurations = {
-	14: 30,
-	59: 30,
-	60: 82
+	Bluey: 127
 }
 
 const server = app.listen(port, () => {
