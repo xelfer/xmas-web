@@ -17,7 +17,7 @@ const sequenceDurations = {
 	Mariah: 241,
 	Queen: 263,
 	Squid: 133,
-	Stay: 141.
+	Stay: 141,
 	BlindingLights: 203
 }
 
