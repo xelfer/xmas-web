@@ -6,11 +6,11 @@ const app = express();
 const port = 8080;
 
 const sequenceDurations = {
-	Bluey: 127
+	Bluey.fseq: 127
 }
 
 const server = app.listen(port, () => {
-	console.log(`12Brian app listening at http://localhost:${port} or http://12brian.st`)
+	console.log(`12Brian app listening at https://12brian.st`)
 })
 const io = require('socket.io')(server);
 
