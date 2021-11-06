@@ -6,7 +6,19 @@ const app = express();
 const port = 8080;
 
 const sequenceDurations = {
-	Bluey: 127
+	Bluey: 127,
+	Manger: 160,
+	Bangarang: 206,
+	ChristmasTime: 240,
+	Dynamite: 199,
+	IBTLALLC: 207,
+	LIS: 125,
+	MJ: 341,
+	Mariah: 241,
+	Queen: 263,
+	Squid: 133,
+	Stay: 141.
+	BlindingLights: 203
 }
 
 const server = app.listen(port, () => {
