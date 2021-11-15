@@ -30,7 +30,6 @@ const server = app.listen(port, () => {
 })
 const io = require('socket.io')(server);
 
-
 app.use('/', express.static('static'))
 app.use('/watch', express.static('static/watch'))
 
@@ -53,27 +52,28 @@ app.post('/playSequence/:id', (req, res) => {
 	}
 	// Otherwise we're good to go.
 	else {
-		console.log(req.params.id);
-		play(req);
-		console.log(req.params.id);
-		res.status(200).send();
+		const id = req.params.id;
+		play(id)
+			.then(() => {
+				logUserInteraction(req);
+				res.status(200).send();
+			})
+			.catch((error) => {
+				console.error(error);
+				res.status(500).send();
+			})
 	}
 })
 
-function play(req) {
-	const id = req.params.id;
+function play(id) {
 	const isSequence = !!sequenceDurations[id];
 	lastRan = now();
 	lastRanSequence = isSequence ? { when: now(), id } : null;
 
-	console.log('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id + '.fseq')
-	axios.get('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id + '.fseq')
-		.then(() => {
-			logUserInteraction(req);
-		})
-		.catch(() => {
-			// console.error(error)
-		})
+	const url = `https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/${id}.fseq`;
+
+	console.log({url})
+	return axios.get(url);
 }
 
 // Return current time rounded to the second
