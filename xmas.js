@@ -1,5 +1,4 @@
 const axios = require('axios');
-const { Socket } = require('dgram');
 const express = require('express')
 const fs = require('fs');
 const app = express();
@@ -69,10 +68,10 @@ function play(req) {
 
 	console.log('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id + '.fseq')
 	axios.get('https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/' + id + '.fseq')
-		.then((res) => {
+		.then(() => {
 			logUserInteraction(req);
 		})
-		.catch((error) => {
+		.catch(() => {
 			// console.error(error)
 		})
 }
@@ -89,21 +88,6 @@ function logUserInteraction(req) {
 	});
 }
 
-
-function reset() {
-	console.log("Resetting to fallback sequence due to inactivity");
-	axios.post('http://localhost:8080/api/player', {
-		action: 'PLAY_PLAYLIST',
-		playlistId: 10,
-		'repeat': true
-	})
-		.then((res) => {
-			console.log(`Received statusCode: ${res.statusCode}`)
-		})
-		.catch((error) => {
-			console.error(error)
-		})
-}
 
 function tick() {
 	const hour = new Date().getHours();
