@@ -478,9 +478,11 @@ $(function() {
       $("#userCount").show();
       $("#status__live").addClass('fadein');
       $("#userCount .loading").hide();
-      const plural = data === 1 ? 's' : '';
+      const plural = data === 1 ? '' : 's';
       $("#userCount .value").text(`${data} user${plural} connected`);
     });
+
+    socket.on("status", console.log);
 
   </script>
 </body>

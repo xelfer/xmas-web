@@ -30,6 +30,15 @@ const server = app.listen(port, () => {
 })
 const io = require('socket.io')(server);
 
+// TODO: Can we get this directly from the API?
+let status = {
+	triggeredBy: null,
+	id: null,
+	sequenceStarted: null,
+	sequenceDuration: null,
+	sequenceShouldEnd: null
+}
+
 app.use('/', express.static('static'))
 app.use('/watch', express.static('static/watch'))
 
@@ -56,6 +65,17 @@ app.post('/playSequence/:id', (req, res) => {
 		play(id)
 			.then(() => {
 				logUserInteraction(req);
+				status = {
+					id,
+					triggeredBy: {
+						userAgent: req.header('user-agent'),
+						ip: req.ip,
+					},
+					sequenceDuration: sequenceDurations[id],
+					sequenceStarted: now(),
+					sequenceShouldEnd: now() + sequenceDurations[id]
+				}
+				io.emit("status", status)
 				res.status(200).send();
 			})
 			.catch((error) => {
@@ -110,6 +130,9 @@ setInterval(tick, 1000);
 
 io.on("connection", socket => {
 	console.log(`User joined ${socket.id}`)
+	// This should send status to newly joined user only
+	io.to(socket.id).emit("status", status);
+	// Update user count
 	io.emit("users", io.engine.clientsCount)
 	socket.on("disconnect", () => {
 		console.log(`User left ${socket.id}`)
