@@ -1,21 +1,20 @@
 const axios = require('axios');
 
-let url = 'http://n.triso.me:2525/fppd/status';
+async function idleCheck() {
 
-await axios.get(url);
+	let url = 'http://n.triso.me:2525/api/fppd/status';
 
-let responseBody = {
-     sequence: sequence,
-};
+	res = await axios.get(url);
 
-let responseCode = 200;
+	let sequence = res.data['current_sequence'];
 
-let response = {
-     statusCode: responseCode,
-     headers: {
-         "x-custom-header" : "my custom header value"
-     },
-     body: JSON.stringify(responseBody)
- };
+	if (sequence == "")  {
+		let idle = 'http://n.triso.me:2525/api/playlist/Idle.fseq/start';
+		trigger = await axios.get(idle);
+	}
+	else
+		console.log('currently playing ' + sequence);
 
- console.log(response);
+}
+
+(async() => { await idleCheck(); } )();
