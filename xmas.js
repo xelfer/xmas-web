@@ -16,13 +16,17 @@ const sequenceDurations = {
 	Mariah: 241,
 	Queen: 263,
 	Squid: 133,
-	Stay: 141,
+	Stay: 122,
 	BlindingLights: 203,
 	SantaShark: 157,
 	StarWars: 302,
 	CandyCaneLane: 200,
 	Beethoven: 83,
-	Titanium: 245
+	Titanium: 245,
+	Carol: 189,
+	Matrix: 184,
+	SYT: 186,
+	Intro: 136
 }
 
 const server = app.listen(port, () => {
