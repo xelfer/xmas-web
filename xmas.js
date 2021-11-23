@@ -26,7 +26,8 @@ const sequenceDurations = {
 	Carol: 189,
 	Matrix: 184,
 	SYT: 186,
-	Intro: 136
+	Intro: 136,
+	SantaComing: 108
 }
 
 const server = app.listen(port, () => {
