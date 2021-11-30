@@ -5,6 +5,13 @@ html, body {
     padding: 0;
     margin: 0;
 }
+body { 
+    /* for loader init state */
+    overflow: hidden;
+}
+button {
+    font-family: 'Space Grotesk', sans-serif;
+}
 
 * {
     box-sizing: border-box;
@@ -19,15 +26,62 @@ main {
     background: url('wallpaper-min.jpg') center top no-repeat;
     background-size: cover;
     padding: 20px;
+    min-height: 100vh;
 }
 
 @media (min-width: 1024px) {
     main {
-        margin: 0 auto;
+        margin: 20px auto;
         max-width: 640px;
-        margin-top: 20px;
+        min-height: calc(100vh - 40px);
         border-radius: 6px;
     }
+}
+#interface {
+    opacity: 0;
+    z-index: 0;
+}
+#loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+}
+#loader button {
+    border-radius: 99px;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: .15em;
+    font-weight: 600;
+    background: rgba(255,255,255,0.1);
+    color: #FFF;
+    padding: 14px 84px;
+    border: 0 none;
+    cursor:pointer;
+}
+#loader button:hover,
+#loader button:focus,
+#loader button:active {
+    background: rgba(255,255,255,0.2);
+}
+#loader h2 {
+    color: rgba(255,255,255,0.8);
+    font-size: 20px;
+    margin-bottom: 2em;
+}
+#loader h2 span {
+    font-weight: 800;
+    color: #FFF;
+    font-size: 48px;
+    letter-spacing: .015em;
+    display: block;
 }
 header {
     margin-bottom: 1em;
