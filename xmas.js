@@ -33,7 +33,12 @@ const sequenceDurations = {
 const server = app.listen(port, () => {
 	console.log(`12Brian app listening at https://12brian.st`)
 })
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+	cors: {
+		origin: "http://localhost:8080",
+		methods: ["GET", "POST"]
+	}
+});
 
 // TODO: Can we get this directly from the API?
 let status = {
@@ -97,7 +102,7 @@ function play(id) {
 
 	const url = `https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/${id}.fseq`;
 
-	console.log({url})
+	console.log({ url })
 	return axios.get(url);
 }
 
