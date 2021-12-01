@@ -9,8 +9,8 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
   <script src="toast.js"></script>
-  <!-- <script src="socket.io/socket.io.js"></script> -->
-  <script src="https://12brian.st/socket.io/socket.io.js"></script>
+  <script src="socket.io/socket.io.js"></script>
+  <!-- <script src="https://12brian.st/socket.io/socket.io.js"></script> -->
   <link href="toast.css" rel="stylesheet" /> <!-- put it first -->
   <link href="styles.css?cachebust=3" rel="stylesheet" />
   <meta name="theme-color" content="#07032E" />
@@ -873,7 +873,7 @@
 
     if (window.io) {
 
-      const socket = io('https://12brian.st/');
+      const socket = io();
 
       socket.on("users", data => {
         $("#userCount").show();
