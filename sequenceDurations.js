@@ -5,15 +5,11 @@ module.exports = {
     },
     Manger: {
         duration: 160,
-        title: ''
+        title: 'Carrie Underwood - Away in a Manger'
     },
     Bangarang: {
         duration: 206,
         title: 'Skrillex - Bangarang'
-    },
-    ChristmasTime: {
-        duration: 240,
-        title: ''
     },
     Dynamite: {
         duration: 199,
@@ -84,7 +80,7 @@ module.exports = {
         title: 'The Weeknd & Ariana Grande - Save Your Tears'
     },
     Intro: {
-        duration: 136,
+        duration: 96,
         title: 'The Greatest Show'
     },
     SantaComing: {
