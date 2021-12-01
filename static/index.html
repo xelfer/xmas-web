@@ -763,6 +763,11 @@
   </main>
   <script>
 
+    // Fix overflow hidden bug on reload
+    $(window).on('beforeunload', function () {
+      $(window).scrollTop(0);
+    });
+
     let lastClick = null;
 
 
