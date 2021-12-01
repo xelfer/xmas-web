@@ -200,6 +200,76 @@ main h2 {
     color: #9C9AB6;
     padding: .75rem;
 }
+
+
+#now-playing {
+    background: #FFFFFF;
+    box-shadow: 0px 0px 100px #130e46, 0px 0px 200px rgba(0,0,0,0.35);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+    padding: 20px;
+    transition: transform .4s ease-in-out;
+}
+#now-playing.off {
+    transform: translateY(200px)
+}
+#now-playing .msg {
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: .05em;
+    color: #64748B;
+}
+#now-playing .title {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 20px;
+    color: #141369;
+    position: relative;
+}
+#now-playing .title:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    background:  linear-gradient(270deg, #FFFFFF 19.67%, rgba(255, 255, 255, 0) 104.1%);
+    content: '';
+}
+.progress .timing {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+.progress .elapsed {
+    color: #3366FF;
+}
+.progress .total {
+    color: #64748B;
+}
+.progress-bar {
+    margin: 6px 0;
+    background: #CBD5E1;
+    border-radius: 4px;
+    width: 100%;
+    height: 4px;
+    position: relative;
+}
+
+.progress-bar-value {
+    width: 20px;
+    border-radius: 4px;
+    height: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #3366FF;
+    transition: width forwards;
+}
+
 #message-me {
     margin: 1.5rem 0 1rem 0;
     background: #201B5A;

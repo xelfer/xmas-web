@@ -1,34 +1,9 @@
 const axios = require('axios');
 const express = require('express')
 const fs = require('fs');
+const sequenceDurations = require('./sequenceDurations');
 const app = express();
 const port = 8080;
-
-const sequenceDurations = {
-	Bluey: 127,
-	Manger: 160,
-	Bangarang: 206,
-	ChristmasTime: 240,
-	Dynamite: 199,
-	IBTLALLC: 207,
-	LIS: 125,
-	MJ: 341,
-	Mariah: 241,
-	Queen: 263,
-	Squid: 133,
-	Stay: 122,
-	BlindingLights: 203,
-	SantaShark: 157,
-	StarWars: 302,
-	CandyCaneLane: 200,
-	Beethoven: 83,
-	Titanium: 245,
-	Carol: 189,
-	Matrix: 184,
-	SYT: 186,
-	Intro: 136,
-	SantaComing: 108
-}
 
 const server = app.listen(port, () => {
 	console.log(`12Brian app listening at https://12brian.st`)
@@ -65,7 +40,7 @@ app.post('/playSequence/:id', (req, res) => {
 	}
 	// Check if music sequence started within last seconds
 	if (lastRanSequence && lastRanSequence.when &&
-		(now() - lastRanSequence.when < sequenceDurations[lastRanSequence.id])) {
+		(now() - lastRanSequence.when < sequenceDurations[lastRanSequence.id]).duration) {
 		console.log('Cool down due to sequence!');
 		res.status(425).send();
 	}
@@ -75,15 +50,17 @@ app.post('/playSequence/:id', (req, res) => {
 		play(id)
 			.then(() => {
 				logUserInteraction(req);
+				const sequence = sequenceDurations[id];
 				status = {
 					id,
+					title: sequence.title,
 					triggeredBy: {
 						userAgent: req.header('user-agent'),
 						ip: req.ip,
 					},
-					sequenceDuration: sequenceDurations[id],
+					sequenceDuration: sequence.duration,
 					sequenceStarted: now(),
-					sequenceShouldEnd: now() + sequenceDurations[id]
+					sequenceShouldEnd: now() + sequence.duration
 				}
 				io.emit("status", status)
 				res.status(200).send();

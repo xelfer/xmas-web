@@ -9,7 +9,8 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
   <script src="toast.js"></script>
-  <script src="socket.io/socket.io.js"></script>
+  <!-- <script src="socket.io/socket.io.js"></script> -->
+  <script src="https://12brian.st/socket.io/socket.io.js"></script>
   <link href="toast.css" rel="stylesheet" /> <!-- put it first -->
   <link href="styles.css?cachebust=3" rel="stylesheet" />
   <meta name="theme-color" content="#07032E" />
@@ -759,6 +760,20 @@
         <img src="messenger.svg" alt="" />
         Send me a nice message
       </a>
+
+      <div id="now-playing" class="off">
+        <div class="msg">Now playing</div>
+        <div class="title">Sequence title</div>
+        <div class="progress">
+          <div class="progress-bar">
+            <div class="progress-bar-value"></div>
+          </div>
+          <div class="timing">
+            <div class="elapsed">0:23</div>
+            <div class="total">2:44</div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
   <script>
@@ -769,7 +784,7 @@
     });
 
     let lastClick = null;
-
+    let STATUS = null;
 
     const changeLights = url => {
       fetch(url, {
@@ -815,21 +830,74 @@
       })
     });
 
-    if (!window.io) {
-      $("#status__offline").addClass('fadein');
+    function fancyTimeFormat(duration) {
+      // Hours, minutes and seconds
+      var hrs = ~~(duration / 3600);
+      var mins = ~~((duration % 3600) / 60);
+      var secs = ~~duration % 60;
+
+      // Output like "1:01" or "4:03:59" or "123:03:59"
+      var ret = "";
+
+      if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+      }
+
+      ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+      ret += "" + secs;
+      return ret;
     }
 
-    const socket = io();
+    // Return current time rounded to the second
+    function now() {
+      return Math.floor(new Date().getTime() / 1000);
+    }
 
-    socket.on("users", data => {
-      $("#userCount").show();
-      $("#status__live").addClass('fadein');
-      $("#userCount .loading").hide();
-      const plural = data === 1 ? '' : 's';
-      $("#userCount .value").text(`${data} user${plural} connected`);
-    });
+    const updateNowPlaying = () => {
+      if (!STATUS) return;
+      const { sequenceDuration, sequenceShouldEnd, sequenceStarted, title } = STATUS;
+      if (sequenceShouldEnd > now()) {
+        const elapsed = Math.max(now() - sequenceStarted, 0);
+        const elapsedPercent = elapsed / sequenceDuration * 100;
+        const remaining = sequenceShouldEnd - now();
+        $('#now-playing')
+          .removeClass('off')
+          .find('.title').text(title).end()
+          .find('.total').text(fancyTimeFormat(sequenceDuration)).end()
+          .find('.elapsed').text(fancyTimeFormat(elapsed)).end()
+          .find('.progress-bar-value').width(elapsedPercent + "%").end()
+      } else {
+        $('#now-playing').addClass('off');
+      }
+    }
 
-    socket.on("status", console.log);
+    if (window.io) {
+
+      const socket = io('https://12brian.st/');
+
+      socket.on("users", data => {
+        $("#userCount").show();
+        $("#status__live").addClass('fadein');
+        $("#userCount .loading").hide();
+        const plural = data === 1 ? '' : 's';
+        $("#userCount .value").text(`${data} user${plural} connected`);
+      });
+
+      socket.on("status", data => {
+        console.log({ data })
+        if (data.id) {
+          STATUS = data;
+          updateNowPlaying(data);
+        }
+        setInterval(() => {
+          updateNowPlaying();
+        }, 100);
+      });
+
+
+    } else {
+      $("#status__offline").addClass('fadein');
+    }
 
   </script>
 </body>
