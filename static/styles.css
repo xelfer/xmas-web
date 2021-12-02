@@ -280,7 +280,7 @@ main h2 {
     border-radius: 4px;
     width: 100%;
     padding: 2rem .75rem;
-    margin-bottom: 200px;
+    margin-bottom: 120px;
     flex-direction: column;
 }
 #message-me .message-me-title {
