@@ -87,4 +87,8 @@ module.exports = {
         duration: 108,
         title: 'Metal Santa Claus is coming to town'
     },
+    ChopSuey: {
+        duration: 210,
+        title: 'System of a Down - Chop Suey'
+    },
 }
