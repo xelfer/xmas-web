@@ -85,17 +85,35 @@ function logUserInteraction(req) {
 	});
 }
 
+// Only count people not on the /watch page
+const countConnected = () => {
+	let connected = 0;
+	io.sockets.sockets.forEach(s => {
+		const isWatchPage = s.handshake.headers.referer.match(/watch/);
+		if (!isWatchPage) {
+			connected++;
+		}
+
+	})
+	return connected;
+}
 
 // -----------------
 
 io.on("connection", socket => {
+	// console.log(io.sockets.sockets)
 	console.log(`User joined ${socket.id}`)
+	console.log(socket.request.headers.referer);
+
 	// This should send status to newly joined user only
 	io.to(socket.id).emit("status", status);
-	// Update user count
-	io.emit("users", io.engine.clientsCount)
+
+	// Update user count now that user has joined
+	io.emit("users", countConnected())
+
+	// Update user count on departure
 	socket.on("disconnect", () => {
 		console.log(`User left ${socket.id}`)
-		io.emit("users", io.engine.clientsCount)
+		io.emit("users", countConnected())
 	})
 })
