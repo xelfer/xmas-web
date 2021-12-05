@@ -27,21 +27,15 @@ let status = {
 app.use('/', express.static('static'))
 app.use('/watch', express.static('static/watch'))
 
-let lastRan = null;
 let lastRanSequence = null;
 
 app.post('/playSequence/:id', (req, res) => {
-	console.log({ lastRan })
-	console.log({ lastRanSequence })
-	// Slow down partner, 3 second cool off
-	if (lastRan && (now() - lastRan < 3)) {
-		console.log('Cool down!');
-		res.status(429).send();
-	}
-	// Check if music sequence started within last seconds
-	if (lastRanSequence && lastRanSequence.when &&
-		(now() - lastRanSequence.when < sequenceDurations[lastRanSequence.id]).duration) {
-		console.log('Cool down due to sequence!');
+
+	// Check if music sequence is playing
+	const isPlaying = lastRanSequence && lastRanSequence.when && (now() - lastRanSequence.when) < sequenceDurations[lastRanSequence.id].duration
+
+	if (isPlaying) {
+		console.log('Already playing a sequence!');
 		res.status(425).send();
 	}
 	// Otherwise we're good to go.
@@ -74,12 +68,8 @@ app.post('/playSequence/:id', (req, res) => {
 
 function play(id) {
 	const isSequence = !!sequenceDurations[id];
-	lastRan = now();
 	lastRanSequence = isSequence ? { when: now(), id } : null;
-
 	const url = `https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/${id}.fseq`;
-
-	console.log({ url })
 	return axios.get(url);
 }
 
@@ -96,24 +86,7 @@ function logUserInteraction(req) {
 }
 
 
-function tick() {
-	const hour = new Date().getHours();
-	// Only run between 6pm (1800) and 11pm (2300)
-	if (hour > 17 && hour < 24) {
-		// If no user input in the last minute
-		if (lastRan && (now() - lastRan > 90)) {
-			//reset();
-			lastRan = null; // clear this out as it wasn't a user who changed this
-		}
-
-	}
-}
-
-
 // -----------------
-
-// Runs every second
-setInterval(tick, 1000);
 
 io.on("connection", socket => {
 	console.log(`User joined ${socket.id}`)
