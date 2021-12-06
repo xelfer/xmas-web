@@ -3,8 +3,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<!-- <script src="/socket.io/socket.io.js"></script> -->
-<script src="https://12brian.st/socket.io/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<!-- <script src="https://12brian.st/socket.io/socket.io.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.2/src/ua-parser.min.js"></script>
 <style>
   html,
@@ -213,7 +213,8 @@
 
     let STATUS = null;
 
-    const socket = io('https://12brian.st');
+    // const socket = io('https://12brian.st');
+    const socket = io();
     const parser = new UAParser();
 
     // Return current time rounded to the second
