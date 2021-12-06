@@ -3,7 +3,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
+<!-- <script src="/socket.io/socket.io.js"></script> -->
+<script src="https://12brian.st/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.2/src/ua-parser.min.js"></script>
 <style>
   html,
   body {
@@ -16,23 +18,33 @@
   #ui {
     position: fixed;
     top: 0;
-    left: 0;
     right: 0;
-    bottom: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
     z-index: 999;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  #ui>div {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    padding: 20px;
+    border-radius: 4px;
+    color: #FFF;
+    margin-bottom: 12px;
   }
 
   #userCount {
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(5px);
-    padding: 20px;
-    border-radius: 4px;
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
+    /* bottom: 20px;
+    left: 20px; */
+  }
+
+  #now-playing {
+    width: 300px;
   }
 
   iframe {
@@ -44,27 +56,233 @@
     /* Viewport-relative units */
     width: 100vw;
   }
+
+  #now-playing .msg {
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: .05em;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  #now-playing .title {
+    margin: 4px 0 12px 0;
+  }
+
+  #now-playing .who {
+    font-size: 12px;
+    margin-top: 6px;
+    opacity: .6;
+  }
+
+  .progress .timing {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+
+  .progress .elapsed {
+    color: #FFF;
+  }
+
+  .progress .total {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .progress-bar {
+    margin: 6px 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    width: 100%;
+    height: 4px;
+    position: relative;
+  }
+
+  .progress-bar-value {
+    width: 20px;
+    border-radius: 4px;
+    height: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.6);
+    transition: width forwards;
+  }
+
+  .fadeIn {
+    -webkit-animation: fadein 1s linear forwards;
+    animation: fadein 1s linear forwards;
+  }
+
+  .fadeOut {
+    -webkit-animation: fadeout 1s linear forwards;
+    animation: fadeout 1s linear forwards;
+  }
+
+  @-webkit-keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes fadeout {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeout {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @-webkit-keyframes playing {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-91px);
+    }
+  }
+
+  @keyframes playing {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-91px);
+    }
+  }
 </style>
 
 <body>
   <div id="ui">
-    <div id="userCount">
 
+    <div id="now-playing" class="off">
+      <div class="msg">Now playing</div>
+      <div class="title">Sequence title</div>
+      <div class="progress">
+        <div class="progress-bar">
+          <div class="progress-bar-value"></div>
+        </div>
+        <div class="timing">
+          <div class="elapsed">0:23</div>
+          <div class="total">2:44</div>
+        </div>
+      </div>
+      <div class="who"></div>
     </div>
+
+    <div id="userCount"></div>
+
   </div>
   <iframe src="https://n.triso.me/alfcam/player.html" name="restreamer-player" width="800" height="450" scrolling="no"
     frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"></iframe>
 </body>
 
 <script>
-  if (window.io) {
-    const socket = io();
+  (() => {
+    if (!window.io) {
+      return
+    }
+
+
+    let STATUS = null;
+
+    const socket = io('https://12brian.st');
+    const parser = new UAParser();
+
+    // Return current time rounded to the second
+    function now() {
+      return Math.floor(new Date().getTime() / 1000);
+    }
+
+
+    function fancyTimeFormat(duration) {
+      // Hours, minutes and seconds
+      var hrs = ~~(duration / 3600);
+      var mins = ~~((duration % 3600) / 60);
+      var secs = ~~duration % 60;
+
+      // Output like "1:01" or "4:03:59" or "123:03:59"
+      var ret = "";
+
+      if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+      }
+
+      ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+      ret += "" + secs;
+      return ret;
+    }
+
+
+    const updateNowPlaying = () => {
+      if (!STATUS) return;
+      const { sequenceDuration, sequenceShouldEnd, sequenceStarted, title, triggeredBy } = STATUS;
+      if (sequenceShouldEnd > now()) {
+        const elapsed = Math.max(now() - sequenceStarted, 0);
+        const elapsedPercent = elapsed / sequenceDuration * 100;
+        const remaining = sequenceShouldEnd - now();
+        const ua = parser.setUA(triggeredBy.userAgent);
+        const friendlyUA = [ua.getDevice().vendor, ua.getDevice().model, ua.getOS().name, ua.getOS().version, ua.getBrowser().name].join(' ').replaceAll('  ', ' ');
+        $('#now-playing')
+          .removeClass('off')
+          .find('.title').text(title).end()
+          .find('.total').text(fancyTimeFormat(sequenceDuration)).end()
+          .find('.elapsed').text(fancyTimeFormat(elapsed)).end()
+          .find('.progress-bar-value').width(elapsedPercent + "%").end()
+          .find('.who').text(`Triggered by ${friendlyUA}`).end()
+      } else {
+        $('#now-playing').addClass('off');
+      }
+    }
+
     socket.on("users", data => {
       console.log({ data })
       const plural = data === 1 ? '' : 's';
       $("#userCount").text(`${data} user${plural} connected`);
     });
-  }
+
+    socket.on("status", data => {
+      console.log({ data })
+      if (data.id) {
+        STATUS = data;
+        updateNowPlaying();
+      }
+    });
+
+    setInterval(() => {
+      updateNowPlaying();
+    }, 100);
+
+
+
+  })();
 </script>
 
 </html>
