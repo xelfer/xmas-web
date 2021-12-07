@@ -91,4 +91,8 @@ module.exports = {
         duration: 210,
         title: 'System of a Down - Chop Suey'
     },
+    LetItGo: {
+        duration: 219,
+        title: 'Frozen - Let It Go'
+    }
 }
