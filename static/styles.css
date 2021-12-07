@@ -272,19 +272,28 @@ main h2 {
 
 #message-me {
     margin: 1.5rem 0 1rem 0;
-    background: #201B5A;
+    background: rgba(0,0,0,0.2);
     color: #9C9AB6;
     text-decoration: none;
     display: flex;
-    align-content: center;
+    align-items: center;
     border-radius: 4px;
     width: 100%;
-    padding: 1rem .75rem;
+    padding: 2rem .75rem;
+    margin-bottom: 120px;
+    flex-direction: column;
+}
+#message-me .message-me-title {
+    color: #FFF;
+    font-weight: 600;
+    font-size: 24px;
+    display: block;
+    margin: 4px 0;
 }
 #message-me img {
-    width: 20px;
-    height: 20px;
-    margin-right: 6px;
+    width: 48px;
+    height: 48px;
+    margin: 0 0 12px 0;
 }
 @media (max-width: 1024px) {
     #message-me {
