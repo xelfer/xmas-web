@@ -2,6 +2,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css"
+  integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <!-- <script src="https://12brian.st/socket.io/socket.io.js"></script> -->
@@ -38,9 +41,15 @@
     margin-bottom: 12px;
   }
 
-  #userCount {
-    /* bottom: 20px;
-    left: 20px; */
+  #userCount i,
+  #streamerCount i {
+    margin-right: 6px;
+    opacity: .8;
+  }
+
+  #userCount i {
+    margin-right: 8px;
+    transform: scale(1.2);
   }
 
   #now-playing {
@@ -51,10 +60,21 @@
     /* iframes are inline by default */
     background: #000;
     border: none;
+  }
+
+  iframe.main {
     /* Reset default border */
     height: 100vh;
     /* Viewport-relative units */
     width: 100vw;
+
+  }
+
+  iframe.yt {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.4), 0 0 200px rgba(0, 0, 0, 0.4);
   }
 
   #now-playing .msg {
@@ -197,11 +217,23 @@
       <div class="who"></div>
     </div>
 
-    <div id="userCount"></div>
+    <div id="userCount">
+      <i class="fas fa-mobile"></i>
+      <span></span>
+    </div>
+
+    <div id="streamerCount">
+      <i class="fab fa-youtube"></i>
+      <span></span>
+    </div>
 
   </div>
-  <iframe src="https://n.triso.me/alfcam/player.html" name="restreamer-player" width="800" height="450" scrolling="no"
-    frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"></iframe>
+  <iframe class="yt" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="533" height="300"
+    type="text/html"
+    src="https://www.youtube.com/embed/Dknybb6tcFY?autoplay=1&fs=0&iv_load_policy=3&showinfo=0&rel=0&cc_load_policy=0&start=0&end=0&origin=http://youtubeembedcode.com"></iframe>
+  <iframe class="main" src="https://n.triso.me/alfcam/player.html" name="restreamer-player" width="800" height="450"
+    scrolling="no" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true"
+    allowfullscreen="true"></iframe>
 </body>
 
 <script>
@@ -265,8 +297,9 @@
 
     socket.on("users", data => {
       console.log({ data })
-      const plural = data === 1 ? '' : 's';
-      $("#userCount").text(`${data} user${plural} connected`);
+      const { controlling, streaming } = data;
+      $("#userCount span").text(`${controlling} controlling`);
+      $("#streamerCount span").text(`${controlling} streaming`);
     });
 
     socket.on("status", data => {

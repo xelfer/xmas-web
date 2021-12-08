@@ -88,6 +88,7 @@ function logUserInteraction(req) {
 // Only count people not on the /watch page
 const countConnected = () => {
 	let connected = 0;
+	const total = io.engine.clientsCount;
 	io.sockets.sockets.forEach(s => {
 		const isWatchPage = s.handshake.headers.referer.match(/watch/);
 		if (!isWatchPage) {
@@ -95,7 +96,10 @@ const countConnected = () => {
 		}
 
 	})
-	return connected;
+	return {
+		controlling: connected,
+		streaming: total - connected
+	};
 }
 
 // -----------------

@@ -959,11 +959,12 @@
       const socket = io();
 
       socket.on("users", data => {
+        const count = data.controlling;
         $("#userCount").show();
         $("#status__live").addClass('fadein');
         $("#userCount .loading").hide();
-        const plural = data === 1 ? '' : 's';
-        $("#userCount .value").text(`${data} user${plural} connected`);
+        const plural = count === 1 ? '' : 's';
+        $("#userCount .value").text(`${count} user${plural} connected`);
       });
 
       socket.on("status", data => {

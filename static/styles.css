@@ -344,3 +344,31 @@ main h2 {
   0% { transform: translateX(0); }
   100% { transform: translateX(-91px); }
 }
+
+
+
+@media (max-height: 568px) {
+    #loader h1, #loader h2 {
+        margin-bottom: 1em;
+    }
+    #loader img {
+        width: 144px;
+        height: 144px;
+    }
+}
+@media (max-height: 520px) {
+    #loader h1, #loader h2 {
+        margin-bottom: 1em;
+    }
+    #loader h1 {
+        font-size: 20px;
+    }
+        #loader h2 span {
+        font-size: 32px;
+    }
+    #loader img {
+        width: 124px;
+        height: 124px;
+    }
+    
+}
