@@ -299,7 +299,7 @@
       console.log({ data })
       const { controlling, streaming } = data;
       $("#userCount span").text(`${controlling} controlling`);
-      $("#streamerCount span").text(`${controlling} streaming`);
+      $("#streamerCount span").text(`${streaming} streaming`);
     });
 
     socket.on("status", data => {
