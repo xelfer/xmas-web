@@ -94,5 +94,9 @@ module.exports = {
     LetItGo: {
         duration: 219,
         title: 'Frozen - Let It Go'
+    },
+    IntotheUnknown: {
+        duration: 186,
+        title: 'Frozen II - Into the Unknown'
     }
 }
