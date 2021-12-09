@@ -40,7 +40,7 @@ module.exports = {
         title: 'Squid Game'
     },
     Stay: {
-        duration: 122,
+        duration: 142,
         title: 'The Kid Laroi - Stay'
     },
     BlindingLights: {
