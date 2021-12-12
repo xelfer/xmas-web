@@ -23,6 +23,37 @@
 <body>
   <main>
 
+    <div id="goodnight" style="display: none;">
+
+      <img width="202" height="202" src="clock.png" alt="" />
+
+      <h1>That's all folks</h1>
+
+      <p>We run most nights,<br />
+        from 6pm - 11pm.</p>
+
+      <div id="prompts">
+
+        <a href="http://m.me/12brianst">
+          <img width="72" height="72" src="chat.png" alt="" />
+          <span>
+            <span class="prompt-title">Had fun?</span>
+            <span class="prompt-message">Send me a nice message</span>
+          </span>
+        </a>
+
+        <a href="https://fundraise.lifeline.org.au/shinealight41?ref=12brianst">
+          <img width="72" height="72" src="coin.png" alt="" />
+          <span>
+            <span class="prompt-title">Feeling supportive?</span>
+            <span class="prompt-message">Shine a light on mental health</span>
+          </span>
+        </a>
+
+      </div>
+
+    </div>
+
     <div id="loader">
       <h1>In the car?</h1>
       <img src="megaphone-min.png" alt="Speaker icon" width="261" height="261" />
@@ -783,11 +814,26 @@
 
 
       </div>
-      <a id="message-me" href="http://m.me/12brianst">
-        <img src="messenger.svg" alt="" />
-        <span class="message-me-title">Had fun?</span>
-        <span>Send me a nice message</span>
-      </a>
+
+      <div id="prompts">
+
+        <a href="http://m.me/12brianst">
+          <img width="72" height="72" src="chat.png" alt="" />
+          <span>
+            <span class="prompt-title">Had fun?</span>
+            <span class="prompt-message">Send me a nice message</span>
+          </span>
+        </a>
+
+        <a href="https://fundraise.lifeline.org.au/shinealight41?ref=12brianst">
+          <img width="72" height="72" src="coin.png" alt="" />
+          <span>
+            <span class="prompt-title">Feeling supportive?</span>
+            <span class="prompt-message">Shine a light on mental health</span>
+          </span>
+        </a>
+
+      </div>
 
       <div id="now-playing" class="off">
         <div class="msg">Now playing</div>
@@ -836,6 +882,7 @@
     }
 
     $(function () {
+
       $('.buttons a').click(e => {
         e.preventDefault();
         const url = $(e.currentTarget).data('sequence');
@@ -911,6 +958,22 @@
         const plural = count === 1 ? '' : 's';
         $("#userCount .value").text(`${count} user${plural} connected`);
       });
+
+      socket.on("isInteractive", isInteractive => {
+        if (isInteractive) {
+          // eg: 5.59 -> 6pm, hide goodnight message
+          $('#goodnight:visible').addClass('fadeout').delay(2000).queue(function (next) {
+            $('#interface').removeClass('fadeout').addClass('fadein');
+            $(this).hide();
+            next();
+          });
+        } else {
+          $("#loader").hide();
+          window.scrollTo(0, 0);
+          $("#goodnight").show().addClass('fadein');
+          $('#interface').addClass('fadeout');
+        }
+      })
 
       socket.on("status", data => {
         console.log({ data })

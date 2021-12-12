@@ -23,6 +23,7 @@ let status = {
 	sequenceDuration: null,
 	sequenceShouldEnd: null
 }
+let isInteractive = null;
 
 app.use('/', express.static('static'))
 app.use('/watch', express.static('static/watch'))
@@ -102,6 +103,22 @@ const countConnected = () => {
 	};
 }
 
+const isInBounds = () => {
+	const hours = new Date().getHours();
+	// UTC 7:00AM -> 11:59AM
+	// AEDT 6:00PM -> 10:59pm
+	return (hours >= 7 && hours <= 11)
+}
+
+setInterval(() => {
+	isInteractive = isInBounds();
+}, 1e3)
+
+// hearbeat to all sockets every 15
+setInterval(() => {
+	io.emit("isInteractive", isInteractive);
+}, 15e3)
+
 // -----------------
 
 io.on("connection", socket => {
@@ -111,6 +128,7 @@ io.on("connection", socket => {
 
 	// This should send status to newly joined user only
 	io.to(socket.id).emit("status", status);
+	io.to(socket.id).emit("isInteractive", isInteractive);
 
 	// Update user count now that user has joined
 	io.emit("users", countConnected())
