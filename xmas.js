@@ -26,6 +26,7 @@ let status = {
 
 app.use('/', express.static('static'))
 app.use('/watch', express.static('static/watch'))
+app.use('/god', express.static('god'))
 
 let lastRanSequence = null;
 
@@ -70,6 +71,13 @@ function play(id) {
 	const isSequence = !!sequenceDurations[id];
 	lastRanSequence = isSequence ? { when: now(), id } : null;
 	const url = `https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/fpp/${id}.fseq`;
+	return axios.get(url);
+}
+
+function playGod(id) {
+	const isSequence = !!sequenceDurations[id];
+	lastRanSequence = isSequence ? { when: now(), id } : null;
+	const url = `https://6bmeafujo3.execute-api.ap-southeast-2.amazonaws.com/prod/god/${id}.fseq`;
 	return axios.get(url);
 }
 
