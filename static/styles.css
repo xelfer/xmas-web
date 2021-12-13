@@ -41,6 +41,19 @@ main {
     opacity: 0;
     z-index: 0;
 }
+#goodnight {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+}
 #loader {
     display: flex;
     flex-direction: column;
@@ -269,7 +282,38 @@ main h2 {
     background: #3366FF;
     transition: width forwards;
 }
-
+#goodnight h1 {
+    margin: 0 0 .5em 0;
+}
+#goodnight p {
+    font-size: 20px;
+    margin: 0;
+    color: rgba(255,255,255,0.65);
+}
+#prompts {
+    padding: 20px 0;
+    margin-bottom: 120px;
+}
+#prompts img {
+    margin-right: 6px;
+}
+#prompts a {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    text-align: left;
+    margin: 10px 0;
+}
+#prompts .prompt-title {
+    display: block;
+    color: #FFF;
+    font-size: 20px;
+}
+#prompts .prompt-message {
+    display: block;
+    color: rgba(255,255,255,0.65);
+}
+/* 
 #message-me {
     margin: 1.5rem 0 1rem 0;
     background: rgba(0,0,0,0.2);
@@ -294,7 +338,7 @@ main h2 {
     width: 48px;
     height: 48px;
     margin: 0 0 12px 0;
-}
+} */
 @media (max-width: 1024px) {
     #message-me {
         max-width: 100%;
