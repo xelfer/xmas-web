@@ -98,7 +98,7 @@ module.exports = {
     IntotheUnknown: {
         duration: 186,
         title: 'Frozen II - Into the Unknown'
-    }
+    },
     badhabits: {
         duration: 230,
         title: 'Ed Sheeran - Bad Habits'
