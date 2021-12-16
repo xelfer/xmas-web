@@ -102,5 +102,9 @@ module.exports = {
     badhabits: {
         duration: 230,
         title: 'Ed Sheeran - Bad Habits'
+    },
+    JBR: {
+        duration: 152,
+        title: 'Glee - Jingle Bell Rock'
     }
 }
