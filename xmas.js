@@ -115,7 +115,7 @@ const isInBounds = () => {
 	const hours = new Date().getHours();
 	// UTC 7:00AM -> 11:59AM
 	// AEDT 6:00PM -> 10:59pm
-	return (hours >= 7 && hours <= 11)
+	return (hours >= 7 && hours <= 12)
 }
 
 setInterval(() => {
