@@ -25,7 +25,9 @@ let status = {
 }
 let isInteractive = null;
 
-app.use('/', express.static('static'))
+//app.use('/', express.static('static'))
+app.use('/', express.static(path.join(__dirname, 'static')));
+
 app.use('/watch', express.static('static/watch'))
 app.use('/god', express.static('god'))
 
