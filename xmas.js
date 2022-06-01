@@ -5,10 +5,6 @@ const sequenceDurations = require('./sequenceDurations');
 const app = express();
 const port = 8080;
 
-app.get('/', function(req, res){
-	res.send('hi?');
-});
-
 const server = app.listen(port, () => {
 	console.log(`12Brian app listening at https://12brian.st`)
 })
